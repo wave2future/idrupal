@@ -1,31 +1,0 @@
-8
-
-dir
-49
-http://e3.unfuddle.com/svn/e3_idrupal/trunk/xcode/Settings.bundle
-http://e3.unfuddle.com/svn/e3_idrupal
-
-
-
-2009-01-28T21:27:27.109232Z
-30
-steve
-
-
-svn:special svn:externals svn:needs-lock
-
-en.lproj
-dir
-
-Root.plist
-file
-
-
-
-
-2009-01-28T21:27:00.000000Z
-1eaf864f4311862e48ebf688c4439b37
-2009-01-28T21:27:27.109232Z
-30
-steve
-
