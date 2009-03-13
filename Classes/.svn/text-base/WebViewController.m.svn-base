@@ -1,0 +1,301 @@
+//
+//  WebViewController.m
+//  Cypress
+//
+//  Created by Steve on 12/01/09.
+//  Copyright 2009 Eighty Elements. All rights reserved.
+//
+
+#import "WebViewController.h"
+
+@implementation WebViewController
+
+
+@synthesize webView;
+@synthesize toolbar;
+@synthesize title;
+@synthesize adminButton;
+@synthesize nextButton;
+@synthesize previousButton;
+
+@synthesize connectionWarning;
+
+@synthesize loader;
+
+@synthesize webViewLoaded;
+
+@synthesize appDelegate;
+
+
+- (NSString *)webViewUrl {
+    // To be implemented by the subclass.
+    return @"";
+}
+
+
+- (NSString *)webViewNoConnection {
+    return @"You need an internet connection to view this. Try again when you are online.";
+}
+
+
+- (BOOL)adminButtonDisplay {
+    return YES;
+}
+
+
+/**
+ *  Load a page in the web view.
+ */
+- (void)loadAddress:(NSString *)address {
+    NSURL *url = [NSURL URLWithString:address];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    
+    [self.webView loadRequest:requestObj];
+}
+
+
+/**
+ *  If a memoryWarning is fired and this view is not being viewed, its content will be removed.
+ *  Make sure that we cleared / set everything we create in viewWillAppear as well.
+ */
+- (void)setView:(UIView *)view {
+    [super setView:view];
+    
+    if (view == nil) {
+        self.webViewLoaded = NO;
+        self.webView = nil;
+        self.title = nil;
+        self.toolbar = nil;
+        self.adminButton = nil;
+        self.nextButton = nil;
+        self.previousButton = nil;
+        
+        self.connectionWarning = nil;
+        
+        self.loader = nil;
+        
+        self.appDelegate = nil;
+    }
+}
+
+
+- (void)viewDidLoad {
+    self.appDelegate = (iDrupalAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    [self.loader startAnimating:self.view];
+    self.webView.userInteractionEnabled = NO;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {  
+    [super viewWillAppear:animated];
+
+    if (self.appDelegate.networkStatus == NotReachable) {
+        if (self.connectionWarning == nil) {
+            CGRect labelFrame = CGRectMake(20.0, 120.0, 280.0, 100.0);
+            self.connectionWarning = [[UILabel alloc] initWithFrame:labelFrame];
+            self.connectionWarning.textAlignment = UITextAlignmentCenter;
+            self.connectionWarning.textColor = [UIColor blackColor];
+            self.connectionWarning.backgroundColor = [UIColor clearColor];
+            self.connectionWarning.numberOfLines = 2;
+            [self.connectionWarning setText: [self webViewNoConnection]];
+            [self.connectionWarning setFont:[UIFont systemFontOfSize:13]];
+            
+            [self.view addSubview:connectionWarning];
+            
+            [self.loader stopAnimating];
+            
+            self.webView.hidden = YES;
+            self.webView.userInteractionEnabled = NO;
+            self.webViewLoaded = NO;
+        }
+        
+        return;
+    }
+    
+    if (!self.webViewLoaded) {
+        [self.connectionWarning removeFromSuperview];
+        self.connectionWarning = nil;
+        
+        [self loadAddress: [self webViewUrl]];
+        
+        self.webView.backgroundColor = nil;
+        self.webViewLoaded = YES;
+    }
+}
+
+
+// TODO: the warning labels shouldn't be absolute positioning but use super.view.bounds.
+- (void)alterOnOrientationChange:(UIInterfaceOrientation)orientation {
+    [super alterOnOrientationChange:orientation];
+    
+    switch (orientation) {
+        case UIInterfaceOrientationPortrait:
+        case UIInterfaceOrientationPortraitUpsideDown:
+            if (self.connectionWarning != nil) {
+                self.connectionWarning.frame = CGRectMake(20.0, 120.0, 280.0, 100.0);
+            }
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
+            if (self.connectionWarning != nil) {
+                self.connectionWarning.frame = CGRectMake(140.0, 70.0, 280.0, 100.0);
+            }
+            break;
+    }
+    
+    self.loader.view.center = self.webView.center;
+}
+
+
+- (void)didReceiveMemoryWarning {
+	[super didReceiveMemoryWarning];
+}
+
+
+- (void)dealloc {
+    [super dealloc];
+       
+	[webView release];
+    [toolbar release];
+    [title release];
+    [adminButton release];
+    [nextButton release];
+    [previousButton release];
+    
+    [connectionWarning release];
+    
+    [loader release];
+}
+
+
+#pragma mark - WebViewDelegate
+
+-(void)webViewDidStartLoad:(UIWebView *)webViewInstance {
+    if (!self.loader.loaded) {    
+        [self.loader startAnimating:self.view];
+        self.webView.userInteractionEnabled = NO;
+        
+        // Fade out content only if it exists.
+        if (self.webView.alpha == 1.0) {
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.3];
+            
+            self.webView.alpha = 0.0;
+            
+            [UIView commitAnimations];
+        }
+    }
+}
+
+- (void)displayWebView {
+    // Bring in content.
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    self.webView.alpha = 1.0;
+    
+    [UIView commitAnimations];
+    
+    [self.loader stopAnimating];
+    
+    self.webView.userInteractionEnabled = YES;
+}
+
+
+-(void)webViewDidFinishLoad:(UIWebView *)webViewInstance {
+    [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(displayWebView) userInfo:nil repeats:NO];    
+    
+    self.title.text = self.tabBarItem.title;
+    
+    // Enable buttons only when usable.
+    if (self.webView.canGoBack) {
+        self.previousButton.enabled = YES;
+    } else {
+        self.previousButton.enabled = NO;        
+    }
+    
+    if (self.webView.canGoForward) {
+        self.nextButton.enabled = YES;        
+    } else {
+        self.nextButton.enabled = NO;                
+    }
+        
+    // Prepare the navigation for the webViews.
+    if (self.appDelegate.isAdmin > 0 && [self adminButtonDisplay] && self.adminButton.hidden) {
+        self.adminButton.alpha = 0.0;
+        self.adminButton.hidden = NO;        
+    }
+    
+    // Only fade in navigation on first load.
+    if (self.nextButton.hidden) {
+        self.nextButton.alpha = 0.0;
+        self.nextButton.hidden = NO;
+        
+        self.previousButton.alpha = 0.0;
+        self.previousButton.hidden = NO;
+        
+        // Display the navigation.
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        if (self.appDelegate.isAdmin > 0 && [self adminButtonDisplay]) {
+            self.adminButton.alpha = 1.0;
+        }
+        
+        self.nextButton.alpha = 1.0;
+        self.previousButton.alpha = 1.0;
+        
+        [UIView commitAnimations];
+    }
+}
+
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    if ([error domain] != NSURLErrorDomain && [error code] != NSURLErrorCancelled) {
+        CGRect labelFrame = CGRectMake(20.0, 120.0, 280.0, 100.0);
+        self.connectionWarning = [[UILabel alloc] initWithFrame:labelFrame];
+        self.connectionWarning.textAlignment = UITextAlignmentCenter;
+        self.connectionWarning.textColor = [UIColor blackColor];
+        self.connectionWarning.backgroundColor = [UIColor clearColor];
+        self.connectionWarning.numberOfLines = 2;
+        [self.connectionWarning setText: @"The server appears to be offline. Please try again later."];
+        [self.connectionWarning setFont:[UIFont systemFontOfSize:13]];
+        
+        [self.view addSubview:connectionWarning];
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [self.loader stopAnimating];
+        
+        self.webView.hidden = YES;
+        self.webView.userInteractionEnabled = NO;    
+        self.webViewLoaded = NO;
+    }
+}
+
+
+#pragma mark - Custom Selectors
+
+- (IBAction)homeAction {
+    [self loadAddress:[self webViewUrl]];
+}
+
+
+- (IBAction)nextAction {
+    [self.webView goForward];
+}
+
+
+- (IBAction)previousAction {
+    [self.webView goBack];    
+}
+
+
+- (IBAction)adminAction {
+    // TODO: support https.
+    [self loadAddress:[NSString stringWithFormat:@"http://%@%@admin", [self.appDelegate hostName], self.appDelegate.siteBasePath]];
+}
+
+
+@end

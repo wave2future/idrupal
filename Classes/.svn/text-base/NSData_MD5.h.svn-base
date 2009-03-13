@@ -1,0 +1,10 @@
+
+#import <Foundation/Foundation.h>
+
+@interface NSData (NSData_MD5)
+- (NSString *)md5;
+@end
+
+@interface NSString (NSData_MD5)
+- (NSString *)md5;
+@end

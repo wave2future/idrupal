@@ -1,0 +1,67 @@
+//
+//  WebViewController.h
+//  Cypress
+//
+//  Created by Steve on 12/01/09.
+//  Copyright 2009 Eighty Elements. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+#import "iDrupalAppDelegate.h"
+#import "LayoutsViewController.h"
+#import "LoaderViewController.h"
+
+
+@class LoaderViewController;
+
+@interface WebViewController : LayoutsViewController <UIWebViewDelegate> {
+    UIWebView *webView;
+    UIToolbar *toolbar;
+    UILabel *title;
+    UIButton *adminButton;
+    UIButton *nextButton;
+    UIButton *previousButton;
+    
+    UILabel *connectionWarning;
+    
+    LoaderViewController *loader;
+    
+    BOOL webViewLoaded;
+    iDrupalAppDelegate* appDelegate;
+}
+
+
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, retain) IBOutlet UILabel *title;
+@property (nonatomic, retain) IBOutlet UIButton *adminButton;
+@property (nonatomic, retain) IBOutlet UIButton *nextButton;
+@property (nonatomic, retain) IBOutlet UIButton *previousButton;
+
+@property (nonatomic, retain) UILabel *connectionWarning;
+
+@property (nonatomic, retain) IBOutlet LoaderViewController *loader;
+
+@property (nonatomic, assign) iDrupalAppDelegate* appDelegate;
+
+@property BOOL webViewLoaded;
+
+
+// To be implemented by the subclass.
+- (NSString *)webViewUrl;
+
+
+- (NSString *)webViewNoConnection;
+
+- (BOOL)adminButtonDisplay;
+
+- (void)loadAddress:(NSString *)address;
+
+- (IBAction)homeAction;
+- (IBAction)nextAction;
+- (IBAction)previousAction;
+- (IBAction)adminAction;
+
+
+@end
