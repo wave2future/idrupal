@@ -100,7 +100,7 @@
 					<object class="IBUIButton" id="273313648">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483356</int>
-						<string key="NSFrame">{{9, 14}, {18, 18}}</string>
+						<string key="NSFrame">{{4, 8}, {34, 34}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -111,6 +111,7 @@
 							<double key="NSSize">1.500000e+01</double>
 							<int key="NSfFlags">16</int>
 						</object>
+						<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 						<string key="IBUIHighlightedTitle">B</string>
 						<string key="IBUIDisabledTitle">B</string>
 						<string key="IBUISelectedTitle">B</string>
@@ -128,13 +129,14 @@
 					<object class="IBUIButton" id="322950040">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483356</int>
-						<string key="NSFrame">{{36, 11}, {24, 24}}</string>
+						<string key="NSFrame">{{40, 8}, {34, 34}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="758809328"/>
+						<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 						<string key="IBUIHighlightedTitle">N</string>
 						<string key="IBUIDisabledTitle">N</string>
 						<string key="IBUISelectedTitle">N</string>

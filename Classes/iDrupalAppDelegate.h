@@ -29,7 +29,9 @@
     
     NSInteger isAdmin;
     
-    LoaderViewController *loader;    
+    LoaderViewController *loader;
+    
+    SettingsFormViewController *settingsView;
 }
 
 
@@ -47,6 +49,8 @@
 @property NSInteger isAdmin;
 
 @property (nonatomic, retain) LoaderViewController *loader;
+
+@property (nonatomic, retain) SettingsFormViewController *settingsView;
 
 
 - (void)alert:(NSString *)message title:(NSString *)title confirm:(BOOL)confirm;

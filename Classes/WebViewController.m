@@ -95,7 +95,7 @@
 - (void)viewDidLoad {
     self.appDelegate = (iDrupalAppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    [self.appDelegate.loader startAnimating:self.view withTitle:@"Loading..."];
+    [self.appDelegate.loader startAnimating:self.appDelegate.window withTitle:@"Loading..."];
     self.webView.userInteractionEnabled = NO;
 }
 
@@ -199,7 +199,7 @@
 
 -(void)webViewDidStartLoad:(UIWebView *)webViewInstance {    
     if (!self.appDelegate.loader.loaded) {
-        [self.appDelegate.loader startAnimating:self.view];
+        [self.appDelegate.loader startAnimating:self.appDelegate.window withTitle:@"Loading..."];
         self.webView.userInteractionEnabled = NO;
         
         // Fade out content only if it exists.
@@ -232,7 +232,7 @@
     
     // Make sure the user has at least 1 of the features available before continuing.
     if (cameraOption.length > 0 || libraryOption.length > 0) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose your picture source." delegate:self cancelButtonTitle:nil 
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose your image source." delegate:self cancelButtonTitle:nil 
                                                    destructiveButtonTitle:nil otherButtonTitles:nil];
         
         actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
@@ -283,12 +283,12 @@
     NSURL *url = [request URL];
     NSString *command = [url host];
     NSString *params = [[url path] substringWithRange:NSMakeRange(1, [[url path] length] - 1)];
-    
+
     NSLog(@"Requested URL: %@", url);
     
     if ([[url scheme] isEqualToString:@"idrupal"]) {
         if ([command isEqualToString:@"imagePicker"]) {            
-            NSLog(@"From imagefield: %@", params);
+            NSLog(@"From imagefield params: %@", params);
             
             // Keep record of the id attribute of which imagefield requested the picker.
             self.imageFieldID = params;

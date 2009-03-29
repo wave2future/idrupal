@@ -15,6 +15,7 @@
 		AA145D630F49D68300DEB738 /* LoaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA145D620F49D68300DEB738 /* LoaderViewController.m */; };
 		AA145D700F49D91A00DEB738 /* LoaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA145D6F0F49D91A00DEB738 /* LoaderView.xib */; };
 		AA25B3900F5681B20007C50F /* RoundedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA25B38F0F5681B20007C50F /* RoundedRectView.m */; };
+		AA4EC5360F7EEF6D00C65226 /* Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4EC5350F7EEF6D00C65226 /* Animations.m */; };
 		AA504A680F6AF5A200C92E0B /* SettingsFormView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA504A670F6AF5A200C92E0B /* SettingsFormView.xib */; };
 		AA504A6B0F6AF5B200C92E0B /* SettingsFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA504A6A0F6AF5B200C92E0B /* SettingsFormViewController.m */; };
 		AA7542260F5C7124003DBF7B /* ImagePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7542250F5C7124003DBF7B /* ImagePickerView.xib */; };
@@ -54,6 +55,8 @@
 		AA145D6F0F49D91A00DEB738 /* LoaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoaderView.xib; sourceTree = "<group>"; };
 		AA25B38E0F5681B20007C50F /* RoundedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundedRectView.h; sourceTree = "<group>"; };
 		AA25B38F0F5681B20007C50F /* RoundedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundedRectView.m; sourceTree = "<group>"; };
+		AA4EC5340F7EEF6D00C65226 /* Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animations.h; sourceTree = "<group>"; };
+		AA4EC5350F7EEF6D00C65226 /* Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animations.m; sourceTree = "<group>"; };
 		AA504A670F6AF5A200C92E0B /* SettingsFormView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsFormView.xib; sourceTree = "<group>"; };
 		AA504A690F6AF5B200C92E0B /* SettingsFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsFormViewController.h; sourceTree = "<group>"; };
 		AA504A6A0F6AF5B200C92E0B /* SettingsFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsFormViewController.m; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 		AA78DA1A0F5327F700489DBF /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				AA4EC5340F7EEF6D00C65226 /* Animations.h */,
+				AA4EC5350F7EEF6D00C65226 /* Animations.m */,
 				AACFDF5C0F30FA3E00DFFBA0 /* Reachability.m */,
 				AACFDF5D0F30FA3E00DFFBA0 /* Reachability.h */,
 				AA25B38E0F5681B20007C50F /* RoundedRectView.h */,
@@ -309,6 +314,7 @@
 				AA25B3900F5681B20007C50F /* RoundedRectView.m in Sources */,
 				AA7FB0ED0F5D6FB800D79DF6 /* ImagePickerViewController.m in Sources */,
 				AA504A6B0F6AF5B200C92E0B /* SettingsFormViewController.m in Sources */,
+				AA4EC5360F7EEF6D00C65226 /* Animations.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +390,7 @@
 				ADDITIONAL_SDKS = "$HOME/Library/SDKs/JSON/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Steve McKenzie";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Steve McKenzie";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				COPY_PHASE_STRIP = YES;
@@ -399,6 +406,7 @@
 					"-ljson",
 				);
 				PRODUCT_NAME = iDrupal;
+				PROVISIONING_PROFILE = "7B68C7A7-3BD5-46B9-8C88-0889B5DB9493";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7B68C7A7-3BD5-46B9-8C88-0889B5DB9493";
 			};
 			name = "Ad-hoc";

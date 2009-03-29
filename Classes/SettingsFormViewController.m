@@ -12,7 +12,6 @@
 
 
 // Configurable settings.
-// TODO: implement settings better.
 static NSString *IDRUPAL_SITE_HOSTNAME_KEY  = @"site_hostname";
 static NSString *IDRUPAL_SITE_USERNAME_KEY  = @"site_username";
 static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
@@ -24,14 +23,6 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 @synthesize hostname;
 @synthesize username;
 @synthesize password;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
 
 
 - (void)viewDidLoad {
@@ -54,35 +45,35 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 
 - (void)finishedAction {
     [self.view removeFromSuperview];
-    [self release];
 }
 
 
 - (IBAction)saveSettings:(UIButton *)sender {
     // Validate fields.
     
-    if (self.hostname.text == nil) {
+    if ([self.hostname.text isEqualToString:@""]) {
         [self.hostname becomeFirstResponder];
         return;
     }
     
-    if (self.username.text == nil) {
+    if ([self.username.text isEqualToString:@""]) {
         [self.username becomeFirstResponder];
         return;
     }
     
-    if (self.password.text == nil) {
+    if ([self.password.text isEqualToString:@""]) {
         [self.password becomeFirstResponder];
         return;
     }    
     
+    // Save fields.
     [[NSUserDefaults standardUserDefaults] setObject:self.hostname.text forKey:IDRUPAL_SITE_HOSTNAME_KEY];
     [[NSUserDefaults standardUserDefaults] setObject:self.username.text forKey:IDRUPAL_SITE_USERNAME_KEY];
     [[NSUserDefaults standardUserDefaults] setObject:self.password.text forKey:IDRUPAL_SITE_PASSWORD_KEY];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self.appDelegate.loader startAnimating:self.appDelegate.window withTitle:@"Connecting..."];
+    // Attempt to reload.
     [self.appDelegate loadApp];
     
     [UIView setAnimationDelegate:self];
@@ -98,7 +89,8 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 }
 
 
-#pragma mark - UITextFieldDelegate Methods
+#pragma mark -
+#pragma mark UITextFieldDelegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.hostname) {        
@@ -114,3 +106,4 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 
 
 @end
+

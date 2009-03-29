@@ -34,8 +34,11 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 
 @synthesize loader;
 
+@synthesize settingsView;
 
-#pragma mark - Initialization methods
+
+#pragma mark -
+#pragma mark Initialization Methods
 
 +(void)initialize {
     if ([iDrupalAppDelegate class] == self) {
@@ -82,7 +85,8 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
     self.networkStatus = -1;
     
     // Setup the loader view.
-    self.loader = [[LoaderViewController alloc] initWithTitle:@"Connecting..."];
+    self.loader = [[LoaderViewController alloc] initWithTitle:@"Loading..."];
+    [self.loader startAnimating:self.window];
     
     // Present the settings form on first load if the settings have yet to be populated.
     if ([[NSUserDefaults standardUserDefaults] stringForKey:IDRUPAL_SITE_USERNAME_KEY].length == 0) {
@@ -97,33 +101,6 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 }
 
 
-- (void)loadSettingsForm {
-    SettingsFormViewController *settingsView = [[SettingsFormViewController alloc] initWithNibName:@"SettingsFormView" bundle:nil];
-    settingsView.view.alpha = 0.0;
-    
-    [self.window addSubview:settingsView.view];
-    [self.window makeKeyAndVisible];
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    
-    settingsView.view.alpha = 1.0;
-    
-    [UIView commitAnimations];
-}
-
-
-- (void)loadApp {
-    [self getSiteInformation];
-    
-    // Add the tab bar controller's current view as a subview of the window
-    [self.window addSubview:self.tabBarController.view];
-    [self.window makeKeyAndVisible];
-    
-    [self.loader startAnimating:self.window]; 
-}
-
-
 - (void)dealloc {
     [tabBarController release];
     [window release];
@@ -133,11 +110,46 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
     [siteBasePath release];
     [receivedLoginData release];
     
+    [loader release];
+    [settingsView release];
+    
     [super dealloc];
 }
 
 
-#pragma mark - Custom methods
+#pragma mark -
+#pragma mark Custom Methods
+
+
+/**
+ *  Start the initial load process.
+ */ 
+- (void)loadApp {
+    [self getSiteInformation];
+    [self.window makeKeyAndVisible];
+    [self.loader setTitle:@"Connecting..."];
+}
+
+/**
+ *  Display the settings form.
+ */
+- (void)loadSettingsForm {
+    if (self.settingsView == nil) {
+        self.settingsView = [[SettingsFormViewController alloc] initWithNibName:@"SettingsFormView" bundle:nil];        
+    }
+    
+    self.settingsView.view.alpha = 0.0;
+    
+    CGRect frame = self.settingsView.view.frame;
+    self.settingsView.view.frame = CGRectMake(frame.origin.x, self.window.frame.origin.y, frame.size.width, frame.size.height);
+    
+    [self.window addSubview:self.settingsView.view];
+    [self.window makeKeyAndVisible];
+    [self.settingsView.view fadeIn:0.3];
+    
+    [self.loader stopAnimating];
+}
+
 
 /**
  *  Helper function for displaying a quick alert view.
@@ -154,14 +166,16 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 }
 
 
-#pragma mark - UIAlertViewDelegate
+#pragma mark -
+#pragma mark UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
 }
 
 
-#pragma mark - Reachability
+#pragma mark -
+#pragma mark Reachability
 
 /**
  *  The host we connect to as our server.
@@ -176,7 +190,8 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 }
 
 
-#pragma mark - Site Information
+#pragma mark -
+#pragma mark Drupal Communication
 
 - (void)setSiteInformation {
     self.siteName = [self.siteInformation objectForKey:@"siteName"];
@@ -185,6 +200,7 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
     // Automatically log the user in now that we know the site has what we need.
     if (self.siteName != nil) {
         [self drupalLogin];
+        [self.loader setTitle:@"Logging In..."];
     }
     
     // If the user has admin access on the site or not.
@@ -223,8 +239,6 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
 }
 
 
-# pragma mark - User Login
-
 /**
  *  Handle a drupal login.
  */
@@ -233,7 +247,8 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
     NSString *password = [[NSUserDefaults standardUserDefaults] stringForKey:IDRUPAL_SITE_PASSWORD_KEY];
     
     if (username.length == 0 || password.length == 0) {
-        [self alert:@"You have not provided all your login information in the settings. We cannot login you in without it." title:@"Error" confirm:NO];
+        [self alert:@"You have not provided all your login information." title:@"Error" confirm:NO];
+        [self loadSettingsForm];
         
         return;
     }
@@ -274,6 +289,7 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if (!conn) {
         [self alert:@"Failed to login. Please make sure your hostname is correct (without a protocol, example: drupal.org) and your server is accessible." title:@"Error" confirm:NO];
+        [self loadSettingsForm];
         return;
     }
     
@@ -285,9 +301,18 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
     NSString *result = [[NSString alloc] initWithData:self.receivedLoginData encoding:NSASCIIStringEncoding];
     
     if ([result intValue] > 0) {
-        // TODO: do i need to do anything once logged in?
+        self.tabBarController.view.alpha = 0.0;
+        
+        [self.window insertSubview:self.tabBarController.view atIndex:0];
+        [self.tabBarController.view fadeIn:0.3];
+        
+        // Remove from memory.
+        if (self.settingsView.view.superview == nil) {
+            self.settingsView = nil;
+        }
     } else {
         [self alert:@"Unable to login. Please make sure your login information is correct." title:@"Error" confirm:NO];
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(loadSettingsForm) userInfo:nil repeats:NO];
     }
     
     [result release];

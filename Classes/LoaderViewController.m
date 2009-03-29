@@ -17,6 +17,9 @@
 @synthesize loaded;
 
 
+#pragma mark -
+#pragma mark Initialization
+
 - (id)initWithTitle:(NSString *)title {
     if (self = [super initWithNibName:@"LoaderView" bundle:nil]) {
         _label = title;
@@ -55,7 +58,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = nil;
-       
+    
     CGRect frame = CGRectMake(0.0, 0.0, 130.0, 70.0);
     RoundedRectView *background = [[RoundedRectView alloc] initWithFrame:frame];
     [self.view insertSubview:background atIndex:0];
@@ -73,10 +76,10 @@
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
-        CGRect frame = CGRectMake(ceil(addTo.center.x - (130.0 / 2)), ceil(addTo.center.y), 130.0, 70.0);
+        CGRect frame = CGRectMake(ceil(addTo.center.x - (130.0 / 2)), ceil(addTo.center.y - 70.0), 130.0, 70.0);
         self.view.frame = frame;
         self.view.alpha = 0.0;
-    
+        
         [addTo addSubview:self.view];
         
         [UIView beginAnimations:nil context:NULL];
@@ -90,19 +93,24 @@
 
 
 - (void)setLabelText {
-    [self.label setText:_label];
+    [self setTitle:_label];
+}
+
+
+- (void)setTitle:(NSString *)title {
+    [self.label setText:title];
+    _label = title;
+    
+    if (!self.loaded) {
+        [self.label setText:title];
+    } else {
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(setLabelText) userInfo:nil repeats:NO];
+    }
 }
 
 
 - (void)startAnimating:(UIView *)addTo withTitle:(NSString *)title {
-    if (!self.loaded) {
-        [self.label setText:title];
-    } else {
-        // Cache the new title and 'fake' waiting 0.5 so labels do not change instantly and all are at least displayed.
-        _label = title;
-        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(setLabelText) userInfo:nil repeats:NO];
-    }
-
+    [self setTitle:title];
     [self startAnimating:addTo];
 }
 
@@ -111,15 +119,21 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDuration:0.6];
+    [UIView setAnimationDidStopSelector:@selector(destroy)];
     
     self.view.alpha = 0.0;
     
     [UIView commitAnimations]; 
     
-    [self.view removeFromSuperview];
     self.loaded = NO;
 }
 
 
+- (void)destroy {
+    [self.view removeFromSuperview];
+}
+
+
 @end
+

@@ -34,6 +34,9 @@
 
 - (void)stopAnimating;
 
+- (void)setTitle:(NSString *)title;
+
+
 
 @end
 
