@@ -464,7 +464,7 @@
 - (IBAction)adminAction {
     // TODO: support https.
     // TODO: support base_path.
-    [self loadAddress:[NSString stringWithFormat:@"http://%@/admin", [self.appDelegate hostName]]];
+    [self loadAddress:[NSString stringWithFormat:@"%@/admin", [self.appDelegate hostName]]];
 }
 
 

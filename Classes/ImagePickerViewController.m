@@ -84,7 +84,7 @@
     NSData * imageData = UIImageJPEGRepresentation(self.image, 0.90);
     
     // TODO: support base_path.
-    NSString *urlString = [NSString stringWithFormat:@"http://%@/idrupal/imagefield-upload", [self.appDelegate hostName]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/idrupal/imagefield-upload", [self.appDelegate hostName]];
     
     // Start the request.
     NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];

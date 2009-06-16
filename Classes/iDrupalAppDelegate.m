@@ -215,7 +215,7 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
     NSAutoreleasePool *pool = [NSAutoreleasePool new];
     
     // TODO: support base path.
-    NSString *json = [NSString stringWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/idrupal/site-information", [self hostName]]]];
+    NSString *json = [NSString stringWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/idrupal/site-information", [self hostName]]]];
     self.siteInformation = [json JSONValue];
     
     if (self.siteInformation == nil) {
@@ -256,7 +256,7 @@ static NSString *IDRUPAL_SITE_PASSWORD_KEY  = @"site_password";
     NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
     
     // TODO: support base_path.
-    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/idrupal/login", [self hostName]]]];
+    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/idrupal/login", [self hostName]]]];
     [request setHTTPMethod:@"POST"];
     
     // Add the header info.

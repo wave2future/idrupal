@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.03">
 	<data>
 		<int key="IBDocument.SystemTarget">528</int>
-		<string key="IBDocument.SystemVersion">9F2114</string>
+		<string key="IBDocument.SystemVersion">9J61</string>
 		<string key="IBDocument.InterfaceBuilderVersion">677</string>
-		<string key="IBDocument.AppKitVersion">949.41</string>
-		<string key="IBDocument.HIToolboxVersion">352.00</string>
+		<string key="IBDocument.AppKitVersion">949.46</string>
+		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1"/>
@@ -39,7 +39,7 @@
 					<object class="IBUIButton" id="358337408">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{130, 267}, {60, 35}}</string>
+						<string key="NSFrame">{{93, 218}, {133, 35}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -51,10 +51,10 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUIHighlightedTitle">Save</string>
-						<string key="IBUIDisabledTitle">Save</string>
-						<string key="IBUISelectedTitle">Save</string>
-						<string key="IBUINormalTitle">Save</string>
+						<string type="base64-UTF8" key="IBUIHighlightedTitle">U2F2ZSAmIGNvbnRpbnVlA</string>
+						<string type="base64-UTF8" key="IBUIDisabledTitle">U2F2ZSAmIGNvbnRpbnVlA</string>
+						<string type="base64-UTF8" key="IBUISelectedTitle">U2F2ZSAmIGNvbnRpbnVlA</string>
+						<string type="base64-UTF8" key="IBUINormalTitle">U2F2ZSAmIGNvbnRpbnVlA</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -67,13 +67,14 @@
 					<object class="IBUITextField" id="258753184">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{125, 127}, {153, 31}}</string>
+						<string key="NSFrame">{{125, 96}, {153, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUIText"/>
 						<int key="IBUIBorderStyle">3</int>
+						<string key="IBUIPlaceholder">http://example.com</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MAA</bytes>
@@ -94,7 +95,7 @@
 					<object class="IBUILabel" id="358672755">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{58, 132}, {59, 21}}</string>
+						<string key="NSFrame">{{58, 101}, {59, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -114,7 +115,7 @@
 					<object class="IBUITextField" id="568810823">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{125, 166}, {153, 31}}</string>
+						<string key="NSFrame">{{125, 135}, {153, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -138,7 +139,7 @@
 					<object class="IBUILabel" id="47310757">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{41, 171}, {79, 21}}</string>
+						<string key="NSFrame">{{41, 140}, {79, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -156,7 +157,7 @@
 					<object class="IBUITextField" id="548972209">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{125, 205}, {153, 31}}</string>
+						<string key="NSFrame">{{125, 174}, {153, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -181,7 +182,7 @@
 					<object class="IBUILabel" id="987561365">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{45, 210}, {75, 21}}</string>
+						<string key="NSFrame">{{45, 179}, {75, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -199,7 +200,7 @@
 					<object class="IBUILabel" id="569369753">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{7, 51}, {306, 52}}</string>
+						<string key="NSFrame">{{7, 36}, {306, 52}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -313,7 +314,6 @@
 						<reference key="object" ref="191373211"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="358337408"/>
 							<reference ref="358672755"/>
 							<reference ref="258753184"/>
 							<reference ref="568810823"/>
@@ -321,6 +321,7 @@
 							<reference ref="548972209"/>
 							<reference ref="987561365"/>
 							<reference ref="569369753"/>
+							<reference ref="358337408"/>
 						</object>
 						<reference key="parent" ref="360949347"/>
 					</object>
@@ -398,7 +399,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>SettingsFormViewController</string>
 					<string>UIResponder</string>
-					<string>{{577, 104}, {320, 480}}</string>
+					<string>{{498, 104}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -468,6 +469,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/SettingsFormViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Animations.h</string>
 					</object>
 				</object>
 			</object>

@@ -14,7 +14,7 @@
 
 - (NSString *)webViewUrl {
     // TODO: support base_path.
-    return [NSString stringWithFormat:@"http://%@/node/add/?view=submit", [self.appDelegate hostName]];
+    return [NSString stringWithFormat:@"%@/node/add/?view=submit", [self.appDelegate hostName]];
 }
 
 
